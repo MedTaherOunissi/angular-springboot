@@ -1,1 +1,32 @@
 
+name: Docker Build and Push
+
+on:
+  push:
+    branches: [ "main" ]  # Trigger on pushes to main branch
+  pull_request:
+    branches: [ "main" ]  # Optional: Run on PRs for testing
+
+env:
+  REGISTRY: docker.io       # Use 'ghcr.io' for GitHub Container Registry
+  IMAGE_NAME: your-dockerhub-username/angular-16-app  # Replace with your Docker Hub repo
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.ref == 'refs/heads/main' }}  # Only push on main branch
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
