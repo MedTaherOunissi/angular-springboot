@@ -6,7 +6,7 @@ COPY . .
 
 RUN sh -c npm install
 
-RUN /bin/sh -c npm run build
+RUN sh -c npm run build
 
 
 FROM nginx:alpine
