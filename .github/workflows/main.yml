@@ -26,6 +26,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: frontend/dockerfile
           push: ${{ github.ref == 'refs/heads/main' }}  # Only push on main branch
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
