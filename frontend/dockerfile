@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN /bin/sh -c npm install
+RUN sh -c npm install
 
 RUN /bin/sh -c npm run build
 
